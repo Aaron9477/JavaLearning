@@ -1,4 +1,4 @@
-package Chapter2ObjectOriented.Base.Function;
+package Chapter2ObjectOriented.Base.Section1Method;
 
 public class Person {
     public static void main(String[] args) {
