@@ -35,6 +35,10 @@ public class Main {
 
 abstract class Person {
     public abstract void run();
+    // 抽象类中也可以定义方法
+    public void run2() {
+        System.out.println("Student.run");
+    }
 }
 
 // 抽象类本身被设计成只能用于被继承
