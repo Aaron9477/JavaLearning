@@ -31,16 +31,35 @@ public class Main {
         System.out.println("5main end...");
 
         // 我们用蓝色表示主线程，也就是main线程，main线程执行的代码有4行，首先打印main start，然后创建Thread对象，紧接着调用start()启动新线程。当start()方法被调用时，JVM就创建了一个新线程，我们通过实例变量t来表示这个新线程对象，并开始执行。
-        //
-        //接着，main线程继续执行打印main end语句，而t线程在main线程执行的同时会并发执行，打印thread run和thread end语句。
-        //
-        //当run()方法结束时，新线程就结束了。而main()方法结束时，主线程也结束了。
-        //
-        //我们再来看线程的执行顺序：
-        //
-        //main线程肯定是先打印main start，再打印main end；
-        //t线程肯定是先打印thread run，再打印thread end。
-        //但是，除了可以肯定，main start会先打印外，main end打印在thread run之前、thread end之后或者之间，都无法确定。因为从t线程开始运行以后，两个线程就开始同时运行了，并且由操作系统调度，程序本身无法确定线程的调度顺序。
+        // 接着，main线程继续执行打印main end语句，而t线程在main线程执行的同时会并发执行，打印thread run和thread end语句。
+        // 当run()方法结束时，新线程就结束了。而main()方法结束时，主线程也结束了。
+        // 我们再来看线程的执行顺序：
+        // main线程肯定是先打印main start，再打印main end；
+        // t线程肯定是先打印thread run，再打印thread end。
+        // 但是，除了可以肯定，main start会先打印外，main end打印在thread run之前、thread end之后或者之间，都无法确定。因为从t线程开始运行以后，两个线程就开始同时运行了，并且由操作系统调度，程序本身无法确定线程的调度顺序。
+
+        // 模拟并发执行的效果，我们可以在线程中调用Thread.sleep()，强迫当前线程暂停一段时间
+        System.out.println("main start...");
+        Thread t6 = new Thread() {
+            public void run() {
+                System.out.println("thread run...");
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {}
+                System.out.println("thread end.");
+            }
+        };
+        t6.start();
+        try {
+            Thread.sleep(20);
+        } catch (InterruptedException e) {}
+        System.out.println("main end...");
+
+        // 可以对线程设定优先级，设定优先级的方法是：
+        // Thread.setPriority(int n) // 1~10, 默认值5
+        //优先级高的线程被操作系统调度的优先级较高，操作系统对高优先级线程可能调度更频繁，但我们决不能通过设置优先级来确保高优先级的线程一定会先执行。
+
+
     }
 }
 
